@@ -1,0 +1,127 @@
+:root {
+  --background-color: #ffffff;
+  --txt-primary-color: #3997d3;
+  --error-color: #e71921;
+  --border-color: #d3cbcb;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  background-color: var(--background-color);
+}
+
+#app-container {
+  margin: 1rem auto;
+  padding: 10px 20px;
+}
+
+.title {
+  color: var(--txt-primary-color);
+  font-size: 3rem;
+  text-align: center;
+}
+
+.subtitle {
+  margin: 3rem 0 0.7rem;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.search-bar {
+  border-radius: 12px;
+  border: 2px solid var(--txt-primary-color);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  max-width: 400px;
+  margin: 0 auto;
+  overflow: hidden;
+  width: 350px;
+  height: 30px;
+}
+
+.search-bar input {
+  padding: 0 0.5rem;
+  border: none;
+  border-radius: 10px 0 0 10px;
+}
+
+.search-bar input:focus-visible {
+  outline-color: var(--txt-primary-color);
+}
+
+.search-bar input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.search-bar input[type="number"]::-webkit-inner-spin-button,
+.search-bar input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.search-bar button {
+  background-color: var(--txt-primary-color);
+  border-radius: 0 10px 10px 0;
+  border: none;
+  color: var(--background-color);
+  cursor: pointer;
+  margin: 0.1rem;
+  padding: 0 0.75rem;
+}
+
+.error-color {
+  color: var(--error-color);
+}
+
+.search-bar.error-color {
+  border-color: var(--error-color);
+}
+
+.error-msg {
+  margin-top: 0.25rem;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.cards-detail-container {
+  display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.detail-card {
+  margin-top: 0.5rem;
+  padding: 1rem;
+  width: fit-content;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.detail-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  column-gap: 2rem;
+}
+
+.detail-label {
+  font-weight: bold;
+}
+
+.place-title {
+  font-weight: bold;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.state-img {
+  margin: 1.25rem 0 0.2rem 0;
+  height: 126px;
+}
