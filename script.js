@@ -1,5 +1,6 @@
 const form = document.getElementById("form");
 const searchBar = document.getElementsByClassName("search-bar");
+const spinner = document.getElementById("spinner");
 
 form.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -17,12 +18,14 @@ async function getZipCodeDetails(event) {
     return;
   }
 
+  spinner.classList.add("show-element");
   const zipCodeDetails = await retriveZipCodeDetails(zipCode);
 
   const paramsToDisplay = zipCodeDetails
     ? { zipCodeDetails }
     : { errorMsg: "Please enter a valid US ZIP Code" };
   displayResults(paramsToDisplay);
+  spinner.classList.remove("show-element");
 }
 
 async function retriveZipCodeDetails(zipCode) {
