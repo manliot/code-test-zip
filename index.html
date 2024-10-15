@@ -1,14 +1,24 @@
 <!doctype html>
 <head>
 	<meta charset="utf-8">
-	<title>Zip Code</title>
+	<title>US Zip Code</title>
 	<meta name="description" content="A frontend dev aptitude test by Deep Space Robots.">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="reset.css">
 	<link rel="stylesheet" href="style.css">
 </head>
 <body>
-	
+	<div id="app-container">
+		<h1 class="title">US Zip Codes</h1>
+		<p class="subtitle">Enter a US Zip code to see details</p>
+		<form id="form">
+			<div class="search-bar">
+				<input type="number" name="zip-code" autocomplete="postal-code" name placeholder="Try with 75081" >
+				<button>Search</button>
+			</div>
+		</form>
+		<!-- Places Details will be here -->
+	</div>
 	<script src="script.js"></script>
 </body>
 </html>
