@@ -1,6 +1,7 @@
 const form = document.getElementById("form");
 const searchBar = document.getElementsByClassName("search-bar");
 const spinner = document.getElementById("spinner");
+const zipcodeInput = document.getElementById("zip-code-input");
 
 form.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -71,6 +72,7 @@ function displayResults({ errorMsg, zipCodeDetails }) {
       className: "cards-detail-container",
     });
     createDetailsCard({ parent: resultChild, zipCodeDetails });
+    zipcodeInput.value = "";
   }
 
   if (resultChild) {
