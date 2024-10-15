@@ -71,9 +71,6 @@ function displayResults({ errorMsg, zipCodeDetails }) {
       className: "cards-detail-container",
     });
     createDetailsCard({ parent: resultChild, zipCodeDetails });
-    createDetailsCard({ parent: resultChild, zipCodeDetails });
-    createDetailsCard({ parent: resultChild, zipCodeDetails });
-    createDetailsCard({ parent: resultChild, zipCodeDetails });
   }
 
   if (resultChild) {
