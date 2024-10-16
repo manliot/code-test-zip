@@ -165,4 +165,5 @@ body {
 .state-img {
   margin: 1.25rem 0 0.2rem 0;
   height: 126px;
+  filter: drop-shadow(4px 5px 5px var(--txt-primary-color));
 }
