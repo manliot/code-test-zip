@@ -14,6 +14,7 @@ body {
 #app-container {
   margin: 1rem auto;
   padding: 10px 20px;
+  position: relative;
 }
 
 .title {
@@ -79,11 +80,27 @@ body {
   border-left-color: var(--txt-primary-color);
   animation: spin 1s linear infinite;
   margin: 1rem auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
   display: none;
+}
+
+.us-map {
+  margin: 4rem auto 1rem;
+  max-width: 400px;
+}
+
+.us-map img {
+  width: 100%;
 }
 
 .show-element {
   display: block;
+}
+
+.hide-element {
+  display: none;
 }
 
 @keyframes spin {

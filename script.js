@@ -2,12 +2,14 @@ const form = document.getElementById("form");
 const searchBar = document.getElementsByClassName("search-bar");
 const spinner = document.getElementById("spinner");
 const zipcodeInput = document.getElementById("zip-code-input");
+const usMap = document.getElementById("us-map");
 
 form.addEventListener("submit", getZipCodeDetails);
 
 async function getZipCodeDetails(event) {
   event.preventDefault();
   removeLastResults();
+  usMap.classList.remove("hide-element");
 
   const formData = new FormData(event.target);
   const zipCode = formData.get("zip-code");
@@ -46,7 +48,6 @@ function removeLastResults() {
 }
 
 function displayResults({ errorMsg, zipCodeDetails }) {
-  const appContainer = document.getElementById("app-container");
   let resultChild;
 
   if (errorMsg) {
@@ -58,14 +59,15 @@ function displayResults({ errorMsg, zipCodeDetails }) {
     resultChild = createDetailsCard({ zipCodeDetails });
 
     zipcodeInput.value = "";
+    usMap.classList.add("hide-element");
   }
 
   if (resultChild) {
-    appContainer.innerHTML += `
-      <div class="result-container" id="result-container">
-        ${resultChild}
-      </div>
-    `;
+    const resultContainer = document.createElement("div");
+    resultContainer["className"] = "result-container";
+    resultContainer["id"] = "result-container";
+    resultContainer.innerHTML = resultChild;
+    form.insertAdjacentElement("afterend", resultContainer);
   }
 }
 
