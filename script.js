@@ -3,30 +3,28 @@ const searchBar = document.getElementsByClassName("search-bar");
 const spinner = document.getElementById("spinner");
 const zipcodeInput = document.getElementById("zip-code-input");
 
-form.addEventListener("submit", (event) => {
-  event.preventDefault();
-  getZipCodeDetails(event);
-});
+form.addEventListener("submit", getZipCodeDetails);
 
 async function getZipCodeDetails(event) {
+  event.preventDefault();
   removeLastResults();
 
   const formData = new FormData(event.target);
   const zipCode = formData.get("zip-code");
 
   if (zipCode === "") {
-    displayResults({ errorMsg: "Please enter a valid US Zip Code" });
+    displayResults({ errorMsg: "Please enter US Zip Code" });
     return;
   }
 
   spinner.classList.add("show-element");
   const zipCodeDetails = await retriveZipCodeDetails(zipCode);
+  spinner.classList.remove("show-element");
 
   const paramsToDisplay = zipCodeDetails
     ? { zipCodeDetails }
     : { errorMsg: "Please enter a valid US ZIP Code" };
   displayResults(paramsToDisplay);
-  spinner.classList.remove("show-element");
 }
 
 async function retriveZipCodeDetails(zipCode) {
@@ -49,39 +47,29 @@ function removeLastResults() {
 
 function displayResults({ errorMsg, zipCodeDetails }) {
   const appContainer = document.getElementById("app-container");
-  const resultContainer = createElement({
-    type: "div",
-    className: "result-container",
-    id: "result-container",
-  });
   let resultChild;
 
   if (errorMsg) {
-    resultChild = createElement({
-      type: "p",
-      className: "error-color error-msg",
-      textContent: errorMsg,
-    });
+    resultChild = `<p class="error-color error-msg">${errorMsg}</p>`;
     searchBar[0].classList.add("error-color");
   }
 
   if (zipCodeDetails) {
-    console.log(zipCodeDetails);
-    resultChild = createElement({
-      type: "div",
-      className: "cards-detail-container",
-    });
-    createDetailsCard({ parent: resultChild, zipCodeDetails });
+    resultChild = createDetailsCard({ zipCodeDetails });
+
     zipcodeInput.value = "";
   }
 
   if (resultChild) {
-    resultContainer.appendChild(resultChild);
-    appContainer.appendChild(resultContainer);
+    appContainer.innerHTML += `
+      <div class="result-container" id="result-container">
+        ${resultChild}
+      </div>
+    `;
   }
 }
 
-function createDetailsCard({ parent, zipCodeDetails }) {
+function createDetailsCard({ zipCodeDetails }) {
   const {
     places,
     "post code": postCode,
@@ -89,7 +77,7 @@ function createDetailsCard({ parent, zipCodeDetails }) {
     "country abbreviation": countryAb,
   } = zipCodeDetails;
 
-  places.forEach(
+  const detailsCards = places.map(
     ({
       "place name": placeName,
       longitude,
@@ -97,59 +85,31 @@ function createDetailsCard({ parent, zipCodeDetails }) {
       state,
       "state abbreviation": stateAb,
     }) => {
-      const detailCard = createElement({
-        type: "div",
-        className: "detail-card",
-      });
-
-      const placeTitle = createElement({
-        type: "p",
-        className: "place-title",
-        textContent: `${postCode} - ${placeName}, ${state} (${stateAb})`,
-      });
-
-      const stateImg = createElement({
-        type: "img",
-        src: `./states/${stateAb}.svg`,
-        alt: `${postCode} map`,
-        className: "state-img",
-      });
-
-      const detailsContainer = createElement({
-        type: "div",
-        className: "details-container",
-      });
-
-      detailsContainer.append(
-        createDetailRow("Country", `${country} (${countryAb})`),
-        createDetailRow("Latitude", latitude),
-        createDetailRow("Longitude", longitude)
-      );
-
-      detailCard.appendChild(placeTitle);
-      detailCard.appendChild(stateImg);
-      detailCard.appendChild(detailsContainer);
-      parent.appendChild(detailCard);
+      return `
+        <div class="detail-card">
+          <p class="place-title">${postCode} - ${placeName}, ${state} (${stateAb})</p>
+          <img src="./states/${stateAb}.svg" alt="${postCode} map" class="state-img">
+          <div class="details-container">
+            <div class="detail-row">
+              <p class="detail-label">Country</p>
+              <p>${country} (${countryAb})</p>
+            </div>
+            <div class="detail-row">
+              <p class="detail-label">Latitude</p>
+              <p>${latitude}</p>
+            </div>
+            <div class="detail-row">
+              <p class="detail-label">Longitude</p>
+              <p>${longitude}</p>
+            </div>
+          </div>
+        </div>
+      `;
     }
   );
-}
-
-function createDetailRow(label, value) {
-  const row = createElement({ type: "div", className: "detail-row" });
-  const labelEl = createElement({
-    type: "p",
-    textContent: label,
-    className: "detail-label",
-  });
-  const valueEl = createElement({ type: "p", textContent: value });
-  row.append(labelEl, valueEl);
-  return row;
-}
-
-function createElement({ type, ...attributes }) {
-  const element = document.createElement(type);
-  Object.entries(attributes).forEach(([key, value]) => {
-    if (value) element[key] = value;
-  });
-  return element;
+  return `
+    <div class="cards-detail-container">
+     ${detailsCards.join("")}
+    </div>
+  `;
 }
